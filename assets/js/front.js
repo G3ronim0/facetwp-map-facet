@@ -29,7 +29,7 @@ var FWP_MAP = FWP_MAP || {};
     });
 
     $(document).on('facetwp-loaded', function() {
-        if ('undefined' === typeof FWP.settings.map) {
+        if ('undefined' === typeof FWP.settings.map || '' === FWP.settings.map) {
             return;
         }
 

@@ -131,6 +131,14 @@ class FacetWP_Facet_Map_Addon
             return $output;
         }
 
+        // Exit if paging and limit = "all"
+        if ( 0 < (bool) FWP()->facet->ajax_params['soft_refresh'] ) {
+            if ( 'all' == FWP()->helper->facet_is( $this->map_facet, 'limit', 'all' ) ) {
+                $output['settings']['map'] = '';
+                return $output;
+            }
+        }
+
         $settings = array(
             'imagePath' => FACETWP_MAP_URL . '/assets/img/m',
             'imageExtension' => 'png',
