@@ -45,6 +45,12 @@ var FWP_MAP = FWP_MAP || {};
                 do_refresh();
             });
 
+            google.maps.event.addDomListener(window, 'resize', function() {
+                var center = FWP_MAP.map.getCenter();
+                google.maps.event.trigger(FWP_MAP.map, 'resize');
+                FWP_MAP.map.setCenter(center);
+            });
+
             FWP_MAP.oms = new OverlappingMarkerSpiderfier(FWP_MAP.map, {
                 markersWontMove: true,
                 markersWontHide: true,
