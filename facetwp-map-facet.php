@@ -340,7 +340,7 @@ class FacetWP_Facet_Map_Addon
         FWP.facets[facet_name] = selected_values;
 
         if (FWP.loaded) {
-            FWP.static_facet = facet_name;
+            FWP.frozen_facets[facet_name] = 'soft';
         }
     });
 
