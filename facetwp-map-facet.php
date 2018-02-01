@@ -327,29 +327,6 @@ class FacetWP_Facet_Map_Addon
 
         FWP()->display->json['map']['filterText'] = __( 'Enable filtering', 'fwp-map' );
         FWP()->display->json['map']['resetText'] = __( 'Reset', 'fwp-map' );
-?>
-<script>
-(function($) {
-    wp.hooks.addAction('facetwp/refresh/map', function($this, facet_name) {
-        var selected_values = [];
-
-        if (FWP_MAP.is_filtering) {
-            selected_values = FWP_MAP.map.getBounds().toUrlValue().split(',');
-        }
-
-        FWP.facets[facet_name] = selected_values;
-
-        if (FWP.loaded) {
-            FWP.frozen_facets[facet_name] = 'soft';
-        }
-    });
-
-    wp.hooks.addFilter('facetwp/selections/map', function(label, params) {
-        return FWP_JSON['map']['resetText'];
-    });
-})(jQuery);
-</script>
-<?php
     }
 
 

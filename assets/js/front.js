@@ -6,6 +6,21 @@ var FWP_MAP = FWP_MAP || {};
     FWP_MAP.activeMarker = null;
     FWP_MAP.is_filtering = false;
 
+    wp.hooks.addAction('facetwp/refresh/map', function($this, facet_name) {
+        var selected_values = [];
+
+        if (FWP_MAP.is_filtering) {
+            selected_values = FWP_MAP.map.getBounds().toUrlValue().split(',');
+        }
+
+        FWP.facets[facet_name] = selected_values;
+        FWP.frozen_facets[facet_name] = 'hard';
+    });
+
+    wp.hooks.addFilter('facetwp/selections/map', function(label, params) {
+        return FWP_JSON['map']['resetText'];
+    });
+
     function do_refresh() {
         if (FWP_MAP.is_filtering) {
             FWP.autoload();
