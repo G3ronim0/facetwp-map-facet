@@ -17,6 +17,14 @@ var FWP_MAP = FWP_MAP || {};
         FWP.frozen_facets[facet_name] = 'hard';
     });
 
+    wp.hooks.addAction('facetwp/reset', function() {
+        $.each(FWP.facet_type, function(name, type) {
+            if ('map' === type) {
+                FWP.frozen_facets[name] = 'hard';
+            }
+        });
+    });
+
     wp.hooks.addFilter('facetwp/selections/map', function(label, params) {
         return FWP_JSON['map']['resetText'];
     });
