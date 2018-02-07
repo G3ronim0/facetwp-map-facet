@@ -269,11 +269,10 @@ class FacetWP_Facet_Map_Addon
 
         ob_start();
 
-        // Preserve globals
-        $temp_post = is_object( $post ) ? clone $post : $post;
-
         // Set the main $post object
         $post = get_post( $post_id );
+
+        setup_postdata( $post );
 
         // Remove UTF-8 non-breaking spaces
         $html = preg_replace( "/\xC2\xA0/", ' ', $this->map_facet['marker_content'] );
@@ -281,7 +280,7 @@ class FacetWP_Facet_Map_Addon
         eval( '?>' . $html );
 
         // Reset globals
-        $post = $temp_post;
+        wp_reset_postdata();
 
         // Store buffered output
         return ob_get_clean();
