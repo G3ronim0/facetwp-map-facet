@@ -301,15 +301,19 @@ class FacetWP_Facet_Map_Addon
         $nelat = (float) $selected_values[2];
         $nelng = (float) $selected_values[3];
 
-        // @url https://stackoverflow.com/a/20741219
-        $compare_lat = ( $swlat < $nelat ) ? "$swlat AND $nelat" : "$nelat AND $swlat";
-        $compare_lng = ( $swlng < $nelng ) ? "$swlng AND $nelng" : "$nelng AND $swlng";
+        // @url https://stackoverflow.com/a/35944747
+        if ( $swlng < $nelng ) {
+            $compare_lng = "facet_display_value BETWEEN $swlng AND $nelng";
+        }
+        else {
+            $compare_lng = "facet_display_value BETWEEN $swlng AND 180 OR ";
+            $compare_lng .= "facet_display_value BETWEEN -180 AND $nelng";
+        }
 
         $sql = "
         SELECT DISTINCT post_id FROM {$wpdb->prefix}facetwp_index
         WHERE facet_name = '{$facet['name']}' AND
-        (facet_value BETWEEN $compare_lat) AND
-        (facet_display_value BETWEEN $compare_lng)";
+        facet_value BETWEEN $swlat AND $nelat AND ($compare_lng)";
 
         return $wpdb->get_col( $sql );
     }
