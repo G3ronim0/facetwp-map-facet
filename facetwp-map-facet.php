@@ -334,78 +334,31 @@ class FacetWP_Facet_Map_Addon
 
 
     /**
-     * Output any admin scripts
-     */
-    function admin_scripts() {
-?>
-<script>
-(function($) {
-    wp.hooks.addAction('facetwp/load/map', function($this, obj) {
-        $this.find('.facet-source').val(obj.source);
-        $this.find('.facet-source-other').val(obj.source_other);
-        $this.find('.facet-map-design').val(obj.map_design);
-        $this.find('.facet-cluster').val(obj.cluster);
-        $this.find('.facet-limit').val(obj.limit);
-        $this.find('.facet-map-width').val(obj.map_width);
-        $this.find('.facet-map-height').val(obj.map_height);
-        $this.find('.facet-min-zoom').val(obj.min_zoom);
-        $this.find('.facet-max-zoom').val(obj.max_zoom);
-        $this.find('.facet-default-lat').val(obj.default_lat);
-        $this.find('.facet-default-lng').val(obj.default_lng);
-        $this.find('.facet-marker-content').val(obj.marker_content);
-    });
-
-    wp.hooks.addFilter('facetwp/save/map', function(obj, $this) {
-        obj['source'] = $this.find('.facet-source').val();
-        obj['source_other'] = $this.find('.facet-source-other').val();
-        obj['map_design'] = $this.find('.facet-map-design').val();
-        obj['cluster'] = $this.find('.facet-cluster').val();
-        obj['limit'] = $this.find('.facet-limit').val();
-        obj['map_width'] = $this.find('.facet-map-width').val();
-        obj['map_height'] = $this.find('.facet-map-height').val();
-        obj['min_zoom'] = $this.find('.facet-min-zoom').val();
-        obj['max_zoom'] = $this.find('.facet-max-zoom').val();
-        obj['default_lat'] = $this.find('.facet-default-lat').val();
-        obj['default_lng'] = $this.find('.facet-default-lng').val();
-        obj['marker_content'] = $this.find('.facet-marker-content').val();
-        return obj;
-    });
-})(jQuery);
-</script>
-<?php
-    }
-
-
-    /**
     * Output admin settings HTML
     */
     function settings_html() {
         $sources = FWP()->helper->get_data_sources();
 ?>
-        <tr>
-            <td>
+        <div class="facetwp-row">
+            <div>
                 <?php _e('Other data source', 'fwp'); ?>:
                 <div class="facetwp-tooltip">
                     <span class="icon-question">?</span>
                     <div class="facetwp-tooltip-content"><?php _e( 'Use a separate value for the longitude?', 'fwp' ); ?></div>
                 </div>
-            </td>
-            <td>
-                <select class="facet-source-other">
-                    <option value=""><?php _e( 'None', 'fwp' ); ?></option>
-                    <?php foreach ( $sources as $group ) : ?>
-                    <optgroup label="<?php echo $group['label']; ?>">
-                        <?php foreach ( $group['choices'] as $val => $label ) : ?>
-                        <option value="<?php echo esc_attr( $val ); ?>"><?php echo esc_html( $label ); ?></option>
-                        <?php endforeach; ?>
-                    </optgroup>
-                    <?php endforeach; ?>
-                </select>
-            </td>
-        </tr>
-        <tr>
-            <td><?php _e('Map design', 'fwp'); ?>:</td>
-            <td>
+            </div>
+            <div>
+                <data-sources
+                    :facet="facet"
+                    :selected="facet.source_other"
+                    :sources="$root.data_sources"
+                    settingName="source_other">
+                </data-sources>
+            </div>
+        </div>
+        <div class="facetwp-row">
+            <div><?php _e('Map design', 'fwp'); ?>:</div>
+            <div>
                 <select class="facet-map-design">
                     <option value="default"><?php _e( 'Default', 'fwp' ); ?></option>
                     <option value="light-dream"><?php _e( 'Light Dream', 'fwp' ); ?></option>
@@ -413,69 +366,69 @@ class FacetWP_Facet_Map_Addon
                     <option value="blue-water"><?php _e( 'Blue Water', 'fwp' ); ?></option>
                     <option value="midnight-commander"><?php _e( 'Midnight Commander', 'fwp' ); ?></option>
                 </select>
-            </td>
-        </tr>
-        <tr>
-            <td>
+            </div>
+        </div>
+        <div class="facetwp-row">
+            <div>
                 <?php _e('Marker clustering', 'fwp'); ?>:
                 <div class="facetwp-tooltip">
                     <span class="icon-question">?</span>
                     <div class="facetwp-tooltip-content"><?php _e( 'Group markers into clusters?', 'fwp' ); ?></div>
                 </div>
-            </td>
-            <td>
+            </div>
+            <div>
                 <select class="facet-cluster">
                     <option value="yes"><?php _e( 'Yes', 'fwp' ); ?></option>
                     <option value="no"><?php _e( 'No', 'fwp' ); ?></option>
                 </select>
-            </td>
-        </tr>
-        <tr>
-            <td><?php _e('Marker limit', 'fwp'); ?>:</td>
-            <td>
+            </div>
+        </div>
+        <div class="facetwp-row">
+            <div><?php _e('Marker limit', 'fwp'); ?>:</div>
+            <div>
                 <select class="facet-limit">
                     <option value="all"><?php _e( 'Show all results', 'fwp' ); ?></option>
                     <option value="paged"><?php _e( 'Show current page results', 'fwp' ); ?></option>
                 </select>
-            </td>
-        </tr>
-        <tr>
-            <td><?php _e('Map size', 'fwp'); ?>:</td>
-            <td>
+            </div>
+        </div>
+        <div class="facetwp-row">
+            <div><?php _e('Map size', 'fwp'); ?>:</div>
+            <div>
                 <input type="text" class="facet-map-width" value="" placeholder="Width" style="width:96px" />
                 <input type="text" class="facet-map-height" value="" placeholder="Height" style="width:96px" />
-            </td>
-        </tr>
-        <tr>
-            <td>
+            </div>
+        </div>
+        <div class="facetwp-row">
+            <div>
                 <?php _e('Zoom', 'fwp'); ?>:
                 <div class="facetwp-tooltip">
                     <span class="icon-question">?</span>
                     <div class="facetwp-tooltip-content"><?php _e( 'Set zoom bounds (between 1 and 20)?', 'fwp' ); ?></div>
                 </div>
-            </td>
-            <td>
+            </div>
+            <div>
                 <input type="text" class="facet-min-zoom" value="1" placeholder="Min" style="width:96px" />
                 <input type="text" class="facet-max-zoom" value="20" placeholder="Max" style="width:96px" />
-            </td>
-        </tr>
-        <tr>
-            <td>
+            </div>
+        </div>
+        <div class="facetwp-row">
+            <div>
                 <?php _e('Default coordinates', 'fwp'); ?>:
                 <div class="facetwp-tooltip">
                     <span class="icon-question">?</span>
                     <div class="facetwp-tooltip-content"><?php _e( 'Center the map here if there are no results', 'fwp' ); ?></div>
                 </div>
-            </td>
-            <td>
+            </div>
+            <div>
                 <input type="text" class="facet-default-lat" value="" placeholder="Latitude" style="width:96px" />
                 <input type="text" class="facet-default-lng" value="" placeholder="Longitude" style="width:96px" />
-            </td>
-        </tr>
-        <tr>
-            <td><?php _e('Marker content', 'fwp'); ?>:</td>
-            <td><textarea class="facet-marker-content"></textarea></td>
-        </tr>
+            </div>
+        </div>
+        <div class="facetwp-row">
+            <div><?php _e('Marker content', 'fwp'); ?>:</div>
+            <div><textarea class="facet-marker-content"></textarea></div>
+        </div>
 <?php
     }
 
