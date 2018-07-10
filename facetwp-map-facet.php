@@ -152,7 +152,7 @@ class FacetWP_Facet_Map_Addon
         );
 
         $settings['init'] = array(
-            'scrollWheel' => false,
+            'scrollwheel' => false,
             'styles' => $this->get_map_design( $this->map_facet['map_design'] ),
             'minZoom' => (int) $this->map_facet['min_zoom'] ?: 1,
             'maxZoom' => (int) $this->map_facet['max_zoom'] ?: 20,
