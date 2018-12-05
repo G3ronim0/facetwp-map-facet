@@ -6,7 +6,7 @@ var FWP_MAP = FWP_MAP || {};
     FWP_MAP.activeMarker = null;
     FWP_MAP.is_filtering = false;
 
-    wp.hooks.addAction('facetwp/refresh/map', function($this, facet_name) {
+    FWP.hooks.addAction('facetwp/refresh/map', function($this, facet_name) {
         var selected_values = [];
 
         if (FWP_MAP.is_filtering) {
@@ -17,7 +17,7 @@ var FWP_MAP = FWP_MAP || {};
         FWP.frozen_facets[facet_name] = 'hard';
     });
 
-    wp.hooks.addAction('facetwp/reset', function() {
+    FWP.hooks.addAction('facetwp/reset', function() {
         $.each(FWP.facet_type, function(name, type) {
             if ('map' === type) {
                 FWP.frozen_facets[name] = 'hard';
@@ -25,7 +25,7 @@ var FWP_MAP = FWP_MAP || {};
         });
     });
 
-    wp.hooks.addFilter('facetwp/selections/map', function(label, params) {
+    FWP.hooks.addFilter('facetwp/selections/map', function(label, params) {
         return FWP_JSON['map']['resetText'];
     });
 
