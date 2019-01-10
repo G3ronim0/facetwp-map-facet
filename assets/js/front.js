@@ -3,8 +3,21 @@ var FWP_MAP = FWP_MAP || {};
 (function($) {
 
     FWP_MAP.markersArray = [];
-    FWP_MAP.activeMarker = null;
+    FWP_MAP.markerLookup = {};
     FWP_MAP.is_filtering = false;
+
+    // Get markers for a given post ID
+    FWP_MAP.get_post_markers = function(post_id) {
+        var output = [];
+        if ('undefined' !== typeof FWP_MAP.markerLookup[post_id]) {
+            var arrayOfIndexes = FWP_MAP.markerLookup[post_id];
+            for (var i = 0; i < arrayOfIndexes.length; i++) {
+                var index = FWP_MAP.markerLookup[post_id][i];
+                output.push(FWP_MAP.markersArray[index]);
+            }
+        }
+        return output;
+    }
 
     FWP.hooks.addAction('facetwp/refresh/map', function($this, facet_name) {
         var selected_values = [];
@@ -59,6 +72,7 @@ var FWP_MAP = FWP_MAP || {};
         if (! FWP.loaded) {
 
             FWP_MAP.map = new google.maps.Map(document.getElementById('facetwp-map'), FWP.settings.map.init);
+            FWP_MAP.infoWindow = new google.maps.InfoWindow();
 
             FWP_MAP.map.addListener('dragend', function() {
                 do_refresh();
@@ -72,6 +86,10 @@ var FWP_MAP = FWP_MAP || {};
                 var center = FWP_MAP.map.getCenter();
                 google.maps.event.trigger(FWP_MAP.map, 'resize');
                 FWP_MAP.map.setCenter(center);
+            });
+
+            google.maps.event.addListener(FWP_MAP.map, 'click', function() {
+                FWP_MAP.infoWindow.close();
             });
 
             FWP_MAP.oms = new OverlappingMarkerSpiderfier(FWP_MAP.map, {
@@ -91,25 +109,41 @@ var FWP_MAP = FWP_MAP || {};
             var args = $.extend({
                 map: FWP_MAP.map,
                 position: obj.position,
-                info: new google.maps.InfoWindow({
-                    content: obj.content
-                })
+                content: obj.content,
+                post_id: obj.post_id
             }, obj);
 
             var marker = new google.maps.Marker(args);
 
             google.maps.event.addListener(marker, 'spider_click', function() {
-                if (null !== FWP_MAP.activeMarker) {
-                    FWP_MAP.activeMarker.info.close();
-                }
+                FWP_MAP.infoWindow.setContent(marker.content);
+                FWP_MAP.infoWindow.open(FWP_MAP.map, marker);
 
-                marker.info.open(FWP_MAP.map, marker);
-                FWP_MAP.activeMarker = marker;
+                // Custom click handler
+                FWP.hooks.doAction('facetwp_map/marker/click', marker);
+            });
+
+            // Custom mouseover handler
+            google.maps.event.addListener(marker, 'mouseover', function() {
+                FWP.hooks.doAction('facetwp_map/marker/mouseover', marker);
+            });
+
+            // Custom mouseout handler
+            google.maps.event.addListener(marker, 'mouseout', function() {
+                FWP.hooks.doAction('facetwp_map/marker/mouseout', marker);
             });
 
             FWP_MAP.oms.addMarker(marker);
             FWP_MAP.markersArray.push(marker);
             FWP_MAP.bounds.extend(marker.getPosition());
+
+            // Create an object to lookup markers based on post ID
+            if ( 'undefined' !== typeof FWP_MAP.markerLookup[obj.post_id]) {
+                FWP_MAP.markerLookup[obj.post_id].push(idx);
+            }
+            else {
+                FWP_MAP.markerLookup[obj.post_id] = [idx];
+            }
         });
 
         var config = FWP.settings.map.config;

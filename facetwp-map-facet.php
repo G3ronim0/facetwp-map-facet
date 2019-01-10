@@ -204,6 +204,7 @@ class FacetWP_Facet_Map_Addon
                     $args = array(
                         'content' => $this->get_content( $post_id ),
                         'position' => $coords,
+                        'post_id' => $post_id,
                     );
 
                     $args = apply_filters( 'facetwp_map_marker_args', $args, $post_id );
