@@ -196,19 +196,21 @@ class FacetWP_Facet_Map_Addon
             $post_ids = (array) wp_list_pluck( FWP()->facet->query->posts, 'ID' );
         }
 
-        $coords = $this->get_coordinates( $post_ids, $this->map_facet );
+        $all_coords = $this->get_coordinates( $post_ids, $this->map_facet );
 
         foreach ( $post_ids as $post_id ) {
-            if ( isset( $coords[ $post_id ] ) ) {
-                $args = array(
-                    'content' => $this->get_content( $post_id ),
-                    'position' => $coords[ $post_id ],
-                );
+            if ( isset( $all_coords[ $post_id ] ) ) {
+                foreach ( $all_coords[ $post_id ] as $coords ) {
+                    $args = array(
+                        'content' => $this->get_content( $post_id ),
+                        'position' => $coords,
+                    );
 
-                $args = apply_filters( 'facetwp_map_marker_args', $args, $post_id );
+                    $args = apply_filters( 'facetwp_map_marker_args', $args, $post_id );
 
-                if ( false !== $args ) {
-                    $settings['locations'][] = $args;
+                    if ( false !== $args ) {
+                        $settings['locations'][] = $args;
+                    }
                 }
             }
         }
@@ -238,7 +240,7 @@ class FacetWP_Facet_Map_Addon
             $result = $wpdb->get_results( $sql );
 
             foreach ( $result as $row ) {
-                $return[ $row->post_id ] = array(
+                $return[ $row->post_id ][] = array(
                     'lat' => (float) $row->lat,
                     'lng' => (float) $row->lng,
                 );
