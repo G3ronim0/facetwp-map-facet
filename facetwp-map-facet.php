@@ -80,7 +80,7 @@ class FacetWP_Facet_Map_Addon
         $height = is_numeric( $height ) ? $height . 'px' : $height;
 
         $class = '';
-        $btn_label = __( 'Enable filtering', 'fwp-map' );
+        $btn_label = __( 'Enable map filtering', 'fwp-map' );
 
         if ( $this->is_map_filtering_enabled() ) {
             $class = ' enabled';
@@ -328,7 +328,7 @@ class FacetWP_Facet_Map_Addon
         FWP()->display->assets['markerclusterer'] = FACETWP_MAP_URL . '/assets/js/markerclusterer.js';
         FWP()->display->assets['facetwp-map-front'] = FACETWP_MAP_URL . '/assets/js/front.js';
 
-        FWP()->display->json['map']['filterText'] = __( 'Enable filtering', 'fwp-map' );
+        FWP()->display->json['map']['filterText'] = __( 'Enable map filtering', 'fwp-map' );
         FWP()->display->json['map']['resetText'] = __( 'Reset', 'fwp-map' );
     }
 
@@ -393,7 +393,7 @@ class FacetWP_Facet_Map_Addon
             </div>
         </div>
         <div class="facetwp-row">
-            <div><?php _e('Map size', 'fwp'); ?>:</div>
+            <div><?php _e('Map width / height', 'fwp'); ?>:</div>
             <div>
                 <input type="text" class="facet-map-width" value="" placeholder="Width" style="width:96px" />
                 <input type="text" class="facet-map-height" value="" placeholder="Height" style="width:96px" />
@@ -401,7 +401,7 @@ class FacetWP_Facet_Map_Addon
         </div>
         <div class="facetwp-row">
             <div>
-                <?php _e('Zoom', 'fwp'); ?>:
+                <?php _e('Zoom min / max', 'fwp'); ?>:
                 <div class="facetwp-tooltip">
                     <span class="icon-question">?</span>
                     <div class="facetwp-tooltip-content"><?php _e( 'Set zoom bounds (between 1 and 20)?', 'fwp' ); ?></div>
@@ -414,7 +414,7 @@ class FacetWP_Facet_Map_Addon
         </div>
         <div class="facetwp-row">
             <div>
-                <?php _e('Default coordinates', 'fwp'); ?>:
+                <?php _e('Default lat / lng', 'fwp'); ?>:
                 <div class="facetwp-tooltip">
                     <span class="icon-question">?</span>
                     <div class="facetwp-tooltip-content"><?php _e( 'Center the map here if there are no results', 'fwp' ); ?></div>
