@@ -2,7 +2,7 @@
 /*
 Plugin Name: FacetWP - Map Facet
 Description: Map facet type
-Version: 0.5.0
+Version: 0.5.1
 Author: FacetWP, LLC
 Author URI: https://facetwp.com/
 GitHub URI: facetwp/facetwp-map-facet
