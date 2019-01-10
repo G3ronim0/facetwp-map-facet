@@ -171,6 +171,7 @@ var FWP_MAP = FWP_MAP || {};
     function clearOverlays() {
         FWP_MAP.oms.removeAllMarkers();
         FWP_MAP.markersArray = [];
+        FWP_MAP.markerLookup = {};
 
         // clear clusters
         if ('undefined' !== typeof FWP_MAP.mc) {
