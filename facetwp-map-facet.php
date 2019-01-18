@@ -13,14 +13,6 @@ Domain Path: /languages
 defined( 'ABSPATH' ) or exit;
 
 /**
- * Internationalization
- */
- function facetwp_map_facet_i18n() {
-   load_plugin_textdomain( 'facetwp-map-facet', false, basename( dirname( __FILE__ ) ) . '/languages' );
- }
- add_action( 'init', 'facetwp_map_facet_i18n' );
-
-/**
  * FacetWP registration hook
  */
 add_filter( 'facetwp_facet_types', function( $facet_types ) {
@@ -43,8 +35,14 @@ class FacetWP_Facet_Map_Addon
 
         define( 'FACETWP_MAP_URL', plugins_url( '', __FILE__ ) );
 
+        add_action( 'init', array( $this, 'load_textdomain' ) );
         add_filter( 'facetwp_index_row', array( $this, 'index_latlng' ), 1, 2 );
         add_filter( 'facetwp_render_output', array( $this, 'add_marker_data' ), 10, 2 );
+    }
+
+
+    function load_textdomain() {
+        load_plugin_textdomain( 'facetwp-map-facet', false, basename( dirname( __FILE__ ) ) . '/languages' );
     }
 
 
@@ -397,7 +395,7 @@ class FacetWP_Facet_Map_Addon
             </div>
         </div>
         <div class="facetwp-row">
-            <div><?php _e('Marker limit', 'facetwp-map-facet'); ?>:</div>
+            <div><?php _e( 'Marker limit', 'facetwp-map-facet' ); ?>:</div>
             <div>
                 <select class="facet-limit">
                     <option value="all"><?php _e( 'Show all results', 'facetwp-map-facet' ); ?></option>
@@ -406,23 +404,23 @@ class FacetWP_Facet_Map_Addon
             </div>
         </div>
         <div class="facetwp-row">
-            <div><?php _e('Map width / height', 'facetwp-map-facet'); ?>:</div>
+            <div><?php _e('Map width / height', 'facetwp-map-facet' ); ?>:</div>
             <div>
-                <input type="text" class="facet-map-width" value="" placeholder="<?php _e( 'Width', 'facetwp-map-facet'); ?>" style="width:96px" />
-                <input type="text" class="facet-map-height" value="" placeholder="<?php _e( 'Height', 'facetwp-map-facet'); ?>" style="width:96px" />
+                <input type="text" class="facet-map-width" value="" placeholder="<?php _e( 'Width', 'facetwp-map-facet' ); ?>" style="width:96px" />
+                <input type="text" class="facet-map-height" value="" placeholder="<?php _e( 'Height', 'facetwp-map-facet' ); ?>" style="width:96px" />
             </div>
         </div>
         <div class="facetwp-row">
             <div>
-                <?php _e('Zoom min / max', 'facetwp-map-facet'); ?>:
+                <?php _e('Zoom min / max', 'facetwp-map-facet' ); ?>:
                 <div class="facetwp-tooltip">
                     <span class="icon-question">?</span>
                     <div class="facetwp-tooltip-content"><?php _e( 'Set zoom bounds (between 1 and 20)?', 'facetwp-map-facet' ); ?></div>
                 </div>
             </div>
             <div>
-                <input type="text" class="facet-min-zoom" value="1" placeholder="<?php _e( 'Min', 'facetwp-map-facet'); ?>" style="width:96px" />
-                <input type="text" class="facet-max-zoom" value="20" placeholder="<?php _e( 'Max', 'facetwp-map-facet'); ?>" style="width:96px" />
+                <input type="text" class="facet-min-zoom" value="1" placeholder="<?php _e( 'Min', 'facetwp-map-facet' ); ?>" style="width:96px" />
+                <input type="text" class="facet-max-zoom" value="20" placeholder="<?php _e( 'Max', 'facetwp-map-facet' ); ?>" style="width:96px" />
             </div>
         </div>
         <div class="facetwp-row">
@@ -434,12 +432,12 @@ class FacetWP_Facet_Map_Addon
                 </div>
             </div>
             <div>
-                <input type="text" class="facet-default-lat" value="" placeholder="<?php _e( 'Latitude', 'facetwp-map-facet'); ?>" style="width:96px" />
-                <input type="text" class="facet-default-lng" value="" placeholder="<?php _e( 'Longitude', 'facetwp-map-facet'); ?>" style="width:96px" />
+                <input type="text" class="facet-default-lat" value="" placeholder="<?php _e( 'Latitude', 'facetwp-map-facet' ); ?>" style="width:96px" />
+                <input type="text" class="facet-default-lng" value="" placeholder="<?php _e( 'Longitude', 'facetwp-map-facet' ); ?>" style="width:96px" />
             </div>
         </div>
         <div class="facetwp-row">
-            <div><?php _e('Marker content', 'facetwp-map-facet'); ?>:</div>
+            <div><?php _e('Marker content', 'facetwp-map-facet' ); ?>:</div>
             <div><textarea class="facet-marker-content"></textarea></div>
         </div>
 <?php
