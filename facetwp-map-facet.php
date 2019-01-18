@@ -381,7 +381,7 @@ class FacetWP_Facet_Map_Addon
         </div>
         <div class="facetwp-row">
             <div>
-                <?php _e('Marker clustering', 'facetwp-map-facet'); ?>:
+                <?php _e( 'Marker clustering', 'facetwp-map-facet' ); ?>:
                 <div class="facetwp-tooltip">
                     <span class="icon-question">?</span>
                     <div class="facetwp-tooltip-content"><?php _e( 'Group markers into clusters?', 'facetwp-map-facet' ); ?></div>
@@ -404,7 +404,7 @@ class FacetWP_Facet_Map_Addon
             </div>
         </div>
         <div class="facetwp-row">
-            <div><?php _e('Map width / height', 'facetwp-map-facet' ); ?>:</div>
+            <div><?php _e( 'Map width / height', 'facetwp-map-facet' ); ?>:</div>
             <div>
                 <input type="text" class="facet-map-width" value="" placeholder="<?php _e( 'Width', 'facetwp-map-facet' ); ?>" style="width:96px" />
                 <input type="text" class="facet-map-height" value="" placeholder="<?php _e( 'Height', 'facetwp-map-facet' ); ?>" style="width:96px" />
@@ -412,7 +412,7 @@ class FacetWP_Facet_Map_Addon
         </div>
         <div class="facetwp-row">
             <div>
-                <?php _e('Zoom min / max', 'facetwp-map-facet' ); ?>:
+                <?php _e( 'Zoom min / max', 'facetwp-map-facet' ); ?>:
                 <div class="facetwp-tooltip">
                     <span class="icon-question">?</span>
                     <div class="facetwp-tooltip-content"><?php _e( 'Set zoom bounds (between 1 and 20)?', 'facetwp-map-facet' ); ?></div>
@@ -425,7 +425,7 @@ class FacetWP_Facet_Map_Addon
         </div>
         <div class="facetwp-row">
             <div>
-                <?php _e('Default lat / lng', 'facetwp-map-facet'); ?>:
+                <?php _e( 'Default lat / lng', 'facetwp-map-facet' ); ?>:
                 <div class="facetwp-tooltip">
                     <span class="icon-question">?</span>
                     <div class="facetwp-tooltip-content"><?php _e( 'Center the map here if there are no results', 'facetwp-map-facet' ); ?></div>
@@ -437,7 +437,7 @@ class FacetWP_Facet_Map_Addon
             </div>
         </div>
         <div class="facetwp-row">
-            <div><?php _e('Marker content', 'facetwp-map-facet' ); ?>:</div>
+            <div><?php _e( 'Marker content', 'facetwp-map-facet' ); ?>:</div>
             <div><textarea class="facet-marker-content"></textarea></div>
         </div>
 <?php
